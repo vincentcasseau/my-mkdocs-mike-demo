@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mike
+          pip install mike mkdocs
 
       - name: Configure Git (for mike to push)
         run: |
@@ -33,26 +33,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
-      - name: Extract tag version
-        id: get_tag
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
-      - name: Deploy version ${{ env.VERSION }}
-        run: mike deploy ${{ env.VERSION }} --update docs/${{ env.VERSION }} --no-config
-
-      - name: Determine latest tag
-        id: latest_tag
+      - name: Deploy versioned docs with mike
         run: |
-          latest=$(git tag --sort=-v:refname | head -n 1)
-          echo "LATEST_VERSION=$latest" >> $GITHUB_ENV
-
-      - name: Set default version to latest (${{ env.LATEST_VERSION }})
-        run: mike set-default ${{ env.LATEST_VERSION }} --no-config
-
-      - name: Push to gh-pages
-        run: mike push
-        
-#      - name: Deploy versioned docs with mike
-#        run: |
-#          TAG_NAME=${GITHUB_REF#refs/tags/}
-#          mike deploy --push --update-aliases "$TAG_NAME" latest
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          mike deploy --push --update-aliases "$TAG_NAME" latest

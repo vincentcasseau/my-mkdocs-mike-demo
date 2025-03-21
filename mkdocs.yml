@@ -1,9 +1,7 @@
 site_name: Mike Versioned Docs Demo
 site_url: https://vincentcasseau.github.io/my-mkdocs-mike-demo/
-theme:
-  name: material
 nav:
-  - Home: index.md
+  - Home: index.html
 use_directory_urls: true
 plugins:
   - search
