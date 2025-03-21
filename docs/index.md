@@ -8,26 +8,24 @@ This is versioned documentation powered by `mike`.
     .then(res => res.json())
     .then(versions => {
       const sel = document.getElementById('version-select');
-      
-      // Get the current version from the URL (it should be in the format /v1.0/)
-      const currentVersion = window.location.pathname.split('/')[2]; // Extract version like v1.0
+      const currentVersion = window.location.pathname.split('/')[2];
 
-      // Create dropdown options for each version
       versions.forEach(v => {
+        const version = v.version;  // Extract version name from the object
         const opt = document.createElement('option');
-        opt.value = `${v}/`;  // relative path
-        opt.textContent = v;
+        opt.value = `${version}/`;  // relative path
+        opt.textContent = v.title || version;  // Use title if available, otherwise use version
         
-        // Set the current version as selected
-        if (v === currentVersion) opt.selected = true;
+        if (version === currentVersion) opt.selected = true;
         
         sel.appendChild(opt);
       });
 
-      // Redirect to selected version when changed
       sel.onchange = () => window.location.href = sel.value;
+    })
+    .catch(error => {
+      console.error('Error fetching versions:', error);
     });
 </script>
 
 Some text here
-
