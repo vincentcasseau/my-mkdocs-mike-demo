@@ -1,8 +1,0 @@
-site_name: Mike Versioned Docs Demo
-site_url: https://vincentcasseau.github.io/my-mkdocs-mike-demo/
-nav:
-  - Home: index.html
-use_directory_urls: true
-plugins:
-  - search
-
