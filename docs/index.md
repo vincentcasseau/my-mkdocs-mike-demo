@@ -13,7 +13,7 @@ This is versioned documentation powered by `mike`.
       versions.forEach(v => {
         const version = v.version;  // Extract version name from the object
         const opt = document.createElement('option');
-        opt.value = `${version}/`;  // relative path
+        opt.value = `/${version}/`;  // Absolute path to version
         opt.textContent = v.title || version;  // Use title if available, otherwise use version
         
         if (version === currentVersion) opt.selected = true;
