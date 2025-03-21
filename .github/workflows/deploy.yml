@@ -1,31 +1,39 @@
-name: Deploy Docs
-
-permissions:
-  contents: write    # Required for pushing to gh-pages
+name: Deploy Versioned Docs with Mike
 
 on:
   push:
     tags:
       - 'v*'
 
+permissions:
+  contents: write  # Required to push to gh-pages
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
-          python-version: '3.8'
+          fetch-depth: 0  # Important for mike and version detection
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install mkdocs mkdocs-material mike
 
-      - name: Deploy version with mike
+      - name: Configure Git (for mike to push)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          mike deploy --push --update-aliases ${GITHUB_REF_NAME} latest
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
+      - name: Deploy versioned docs with mike
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          mike deploy --push --update-aliases "$TAG_NAME" latest
