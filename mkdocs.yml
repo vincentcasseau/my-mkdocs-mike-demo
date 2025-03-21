@@ -1,0 +1,8 @@
+site_name: Mike Versioned Docs Demo
+theme:
+  name: material
+nav:
+  - Home: index.md
+plugins:
+  - search
+
