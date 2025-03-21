@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs mkdocs-material mike
+          pip install mike
 
       - name: Configure Git (for mike to push)
         run: |
