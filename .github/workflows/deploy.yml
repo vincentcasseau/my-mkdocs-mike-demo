@@ -1,5 +1,8 @@
 name: Deploy Docs
 
+permissions:
+  contents: write    # Required for pushing to gh-pages
+
 on:
   push:
     tags:
