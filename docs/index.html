@@ -158,7 +158,7 @@
         const version = v.version;  // Extract version name from the object
         const opt = document.createElement('option');
         opt.value = `/my-mkdocs-mike-demo/${version}/`;  // Absolute path to version
-        opt.textContent = v.title || version;  // Use title if available, otherwise use version
+        opt.textContent = v.title + (v.aliases.length ? ` (${v.aliases.join(', ')})` : '') || version;  // Use title and append aliases in parentheses if available
         
         if (version === currentVersion) opt.selected = true;
         
