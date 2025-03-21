@@ -30,4 +30,4 @@ This is versioned documentation powered by `mike`.
 
 Some text here
 
-Hello
+Hello all
